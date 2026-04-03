@@ -14,9 +14,14 @@ URL = "https://in.bookmyshow.com/explore/movies-muzaffarpur"
 
 def check_movie():
     options = Options()
-    options.add_argument("--headless")
+
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+
+    options.add_argument(
+    "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 
     from selenium.webdriver.chrome.service import Service
     from webdriver_manager.chrome import ChromeDriverManager
@@ -24,32 +29,36 @@ def check_movie():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
 
-    driver.get(URL)
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
+    driver.get(URL)
 
     time.sleep(5)
 
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(3)
 
+    for _ in range(3):
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
 
-    try:
-        movies = driver.find_elements(By.TAG_NAME, "h3")
+    
+    elements = driver.find_elements(By.XPATH, "//*[text()]")
 
-        for movie in movies:
-            text = movie.text.lower()
-            if "hail mary" in text:
+    for el in elements[:50]:
+        print("TEXT:", el.text)
+
+    target_keywords = ["hail mary"]
+
+    for el in elements:
+        try:
+            text = el.text.lower().strip()
+            if any(keyword in text for keyword in target_keywords):
                 driver.quit()
                 return True
-    except Exception as e:
-        print("Element detection error:", e)
+        except:
+            continue
 
-
-    page = driver.page_source.lower()
     driver.quit()
-
-    keywords = ["project hail mary", "hail mary"]
-    return any(keyword in page for keyword in keywords)
+    return False
 
 
 def send_telegram(message):
