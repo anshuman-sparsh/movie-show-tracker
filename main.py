@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 
-URL = "https://in.bookmyshow.com/explore/movies-muzaffarpur"
+URL = "https://www.district.in/movies/muzaffarpur-movie-tickets"
 
 
 def check_movie():
