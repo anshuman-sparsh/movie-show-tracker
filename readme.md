@@ -1,19 +1,21 @@
-# 🎬 Movie Show Tracker (BookMyShow Alert Bot)
+# 🎬 Movie Show Tracker (District Alert Bot)
 
 ## 🚀 Real Problem → Real Solution
 
-I wanted to watch *Project Hail Mary* on release day, but in my city (Muzaffarpur), all theatres were occupied by another high-demand movie.
+I wanted to watch *Project Hail Mary* on release day, but in my city (Muzaffarpur), all theatre screens were occupied by another high-demand movie.
 
-Instead of manually checking again and again, I built a simple automation system that does it for me.
+Manually checking again and again was frustrating.
+
+So instead of waiting, I built a system that checks for me.
 
 ---
 
 ## 💡 What this project does
 
-This project automatically monitors BookMyShow for a specific movie in Muzaffarpur and sends alerts when it becomes available.
+This project automatically monitors movie availability in Muzaffarpur using District (by Zomato) and sends alerts when a specific movie appears.
 
-✔ Checks movie availability every 10 minutes
-✔ Runs automatically on cloud (no laptop required)
+✔ Checks availability every 10 minutes
+✔ Runs automatically on cloud (GitHub Actions)
 ✔ Sends instant alerts via Telegram and Email
 
 ---
@@ -21,8 +23,8 @@ This project automatically monitors BookMyShow for a specific movie in Muzaffarp
 ## ⚙️ How it works
 
 1. GitHub Actions runs the script every 10 minutes
-2. Selenium opens BookMyShow (Muzaffarpur page)
-3. Script searches for the movie name
+2. Script fetches District movies page for Muzaffarpur
+3. Scans page content for the target movie
 4. If found → sends alert
 
 ---
@@ -30,7 +32,7 @@ This project automatically monitors BookMyShow for a specific movie in Muzaffarp
 ## 🧠 Tech Stack
 
 * Python
-* Selenium (browser automation)
+* Requests (lightweight scraping)
 * GitHub Actions (automation & scheduling)
 * Telegram Bot API (instant alerts)
 * SMTP (email notifications)
@@ -41,14 +43,15 @@ This project automatically monitors BookMyShow for a specific movie in Muzaffarp
 
 * Fully automated (runs in background)
 * Works even when laptop is OFF
+* No Selenium / browser dependency
+* More reliable than traditional scraping
 * Real-time alert system
-* Built for a real-world personal use case
 
 ---
 
 ## 🧪 Example Use Case
 
-> Tracking availability of "Project Hail Mary" in Muzaffarpur where theatre screens were limited due to another movie dominating all shows.
+> Tracking availability of "Project Hail Mary" in Muzaffarpur when theatres were initially dominated by another movie.
 
 ---
 
@@ -66,17 +69,20 @@ The project uses secure environment variables:
 ## 📌 Future Improvements
 
 * Track specific theatres (Cinepolis, Eylex, etc.)
-* Detect actual show timings
+* Detect show timings (not just listing)
 * Prevent duplicate alerts
 * Multi-movie tracking
+* Add UI/dashboard
 
 ---
 
 ## 🧠 Key Insight
 
-This project is a simple example of how automation can solve small real-life problems efficiently.
+Initially, I tried scraping BookMyShow using Selenium, but it was blocked due to bot detection.
 
-Instead of repeatedly checking manually, a system can monitor and notify you instantly.
+Instead of forcing a solution, I switched to a better data source (District), which made the system simpler and more reliable.
+
+> Sometimes the best fix is not better code — it's choosing the right source.
 
 ---
 
@@ -88,6 +94,6 @@ Feel free to explore, use, or improve this project.
 
 ## 🙌 Final Note
 
-Built this for myself, but it turned out to be a great learning experience in automation, scraping, and cloud-based workflows.
+Built this for a real personal need, and it turned into a great learning experience in automation, scraping strategy, and system design.
 
 ---
