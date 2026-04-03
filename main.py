@@ -23,14 +23,33 @@ def check_movie():
 
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
+
     driver.get(URL)
 
-    time.sleep(7)  # wait for page to load
+
+    time.sleep(5)
+
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(3)
+
+
+    try:
+        movies = driver.find_elements(By.TAG_NAME, "h3")
+
+        for movie in movies:
+            text = movie.text.lower()
+            if "hail mary" in text:
+                driver.quit()
+                return True
+    except Exception as e:
+        print("Element detection error:", e)
+
 
     page = driver.page_source.lower()
     driver.quit()
 
-    return "project hail mary" in page
+    keywords = ["project hail mary", "hail mary"]
+    return any(keyword in page for keyword in keywords)
 
 
 def send_telegram(message):
