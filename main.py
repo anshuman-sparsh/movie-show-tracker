@@ -2,6 +2,7 @@ import os
 import time
 import smtplib
 import requests
+import undetected_chromedriver as uc
 from email.mime.text import MIMEText
 
 from selenium import webdriver
@@ -36,6 +37,9 @@ def check_movie():
 
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
+    
+
+    driver = uc.Chrome(headless=True)
     driver.get(URL)
 
     time.sleep(5)
