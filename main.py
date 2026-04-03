@@ -39,7 +39,10 @@ def check_movie():
 
     
 
-    driver = uc.Chrome(headless=True)
+    driver = uc.Chrome(
+    version_main=146,
+    headless=True
+)
     driver.get(URL)
 
     time.sleep(5)
